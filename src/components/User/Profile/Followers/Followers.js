@@ -7,8 +7,8 @@ import './Followers.scss'
 
 export default function Followers(props) {
 
-    const { username } = props
-    
+    const { username, postLength } = props
+
     const [showModal, setShowModal] = useState(false)
     const [titleModal, setTitleModal] = useState('')
     const [childrenModal, setChildrenModal] = useState(null)
@@ -19,7 +19,7 @@ export default function Followers(props) {
         }
     })
 
-    const {data: dataFolloweds, loading: loadingFolloweds, startPolling: startPollingFolloweds, stopPolling: stopPollingFolloweds } = useQuery(GET_FOLLOWEDS, {
+    const { data: dataFolloweds, loading: loadingFolloweds, startPolling: startPollingFolloweds, stopPolling: stopPollingFolloweds } = useQuery(GET_FOLLOWEDS, {
         variables: { username }
     })
 
@@ -30,13 +30,13 @@ export default function Followers(props) {
             stopPollingFollowers()
             startPollingFolloweds()
         }
-    }, [startPollingFollowers, stopPollingFollowers. startPollingFolloweds, stopPollingFolloweds])
+    }, [startPollingFollowers, stopPollingFollowers.startPollingFolloweds, stopPollingFolloweds])
 
     if (loadingFollowers || loadingFolloweds) return null
 
     const openFollowersModal = () => {
         setTitleModal('Seguidores')
-        setChildrenModal(<ListUsers users={dataFollowers.getFollowers} setShowModal={setShowModal}/>)
+        setChildrenModal(<ListUsers users={dataFollowers.getFollowers} setShowModal={setShowModal} />)
         setShowModal(true)
     }
 
@@ -50,7 +50,7 @@ export default function Followers(props) {
         <React.Fragment>
             <div className='followers'>
                 <p>
-                    <span>*</span> publicaciones
+                    <span>{postLength}</span> publicaciones
                 </p>
                 <p className='link' onClick={openFollowersModal}>
                     <span>{dataFollowers.getFollowers.length}</span> seguidores

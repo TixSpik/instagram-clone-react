@@ -52,8 +52,8 @@ export default function ModalUpload({ show, setShow }) {
                 onClose()
             }
         } catch (error) {
-            console.log(error)
             setIsLoading(false)
+            console.log(error)
         }
     }
 

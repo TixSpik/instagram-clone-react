@@ -1,0 +1,14 @@
+@import '../../scss/index.scss';
+
+.posts {
+    margin-top: 50px;
+
+    &__column {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 5px !important;
+        // width: 300px;
+    }
+}
+

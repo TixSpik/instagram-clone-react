@@ -8,7 +8,8 @@ import './AvatarForm.scss'
 
 export default function AvatarForm(props) {
 
-    const { setShowModal, auth } = props
+    const { setShowModal, auth, getUser } = props
+    console.log(getUser)
     const [updateAvatar] = useMutation(UPDATE_AVATAR, {
         update(cache, { data: { updateAvatar } }) {
             const { getUser } = cache.readQuery({
@@ -55,7 +56,14 @@ export default function AvatarForm(props) {
             setIsLooading(true)
 
             try {
-                const result = await updateAvatar({ variables: { file } })
+                const result = await updateAvatar({
+                    variables: {
+                        input: {
+                            urlAvatar: getUser.avatar ? getUser.avatar : '',
+                            file
+                        }
+                    }
+                })
                 const { data } = result
 
                 if (!data.updateAvatar.status) {
@@ -64,6 +72,7 @@ export default function AvatarForm(props) {
                 } else {
                     setIsLooading(false)
                     setShowModal(false)
+                    // window.location.reload(false)
                 }
 
             } catch (error) {
@@ -84,7 +93,13 @@ export default function AvatarForm(props) {
 
     const onDeleteAvatar = async () => {
         try {
-            const result = await deleteAvatar()
+            const result = await deleteAvatar({
+                variables: {
+                    input: {
+                        urlAvatar: getUser.avatar ? getUser.avatar : ''
+                    }
+                }
+            })
             const { data } = result
 
             if (!data.deleteAvatar) {

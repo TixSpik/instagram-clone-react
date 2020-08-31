@@ -14,14 +14,14 @@ import './Profile.scss'
 
 export default function Profile(props) {
 
-    const { username } = props
+    const { username, postLength } = props
     const [showModal, setShowModal] = useState(false)
     const [titleModal, setTitleModal] = useState('')
     const [childrenModal, setChildrenModal] = useState(null)
     const { auth } = useAuth()
 
 
-    const { data, loading, error,refetch } = useQuery(GET_USER, {
+    const { data, loading, error, refetch } = useQuery(GET_USER, {
         variables: {
             username
         }
@@ -50,12 +50,14 @@ export default function Profile(props) {
                 setTitleModal('Cambiar foto de perfil')
                 setChildrenModal(
                     <AvatarForm
-                    auth={auth} setShowModal=
-                    {setShowModal}
-                />)
+                        auth={auth}
+                        setShowModal={setShowModal}
+                        refetch={refetch}
+                        getUser={getUser}
+                    />)
                 setShowModal(true)
                 break;
-            
+
             case 'settings':
                 setTitleModal('Ajustes')
                 setChildrenModal(
@@ -68,7 +70,7 @@ export default function Profile(props) {
                     />)
                 setShowModal(true)
                 break;
-            
+
             default:
                 break;
         }
@@ -86,7 +88,7 @@ export default function Profile(props) {
                 </Grid.Column>
                 <Grid.Column width={11} className='profile__right'>
                     <HeaderProfile username={username} auth={auth} handleModal={handleModal} />
-                    <Followers username={username} />
+                    <Followers postLength={postLength} username={username} />
                     <div className='other'>
                         <p className='name'>{getUser.name}</p>
                         {getUser.website && (

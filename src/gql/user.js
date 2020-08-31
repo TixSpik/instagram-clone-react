@@ -35,17 +35,17 @@ export const GET_USER = gql`
 `
 
 export const UPDATE_AVATAR = gql`
-  mutation updateAvtar($file: Upload){
-    updateAvatar(file: $file){
+    mutation updateAvtar($input: FileImage){
+    updateAvatar(input: $input){
       status,
       urlAvatar
     }
-}
+  }
 `
 
 export const DELETE_AVATAR = gql`
-    mutation deleteAvatar{
-    deleteAvatar
+    mutation deleteAvatar($input: AvatarInput){
+    deleteAvatar(input: $input)
   }
 `
 
